@@ -5,10 +5,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from db.database import PostgreSQL
+from db.postgres import PostgreSQL
 import os
 
-db = PostgreSQL(os.path.join(os.path.dirname(__file__), 'db', 'config.ini'))
+db = PostgreSQL()
 
 # Start Firefox WebDriver
 driver = webdriver.Firefox()
@@ -36,7 +36,7 @@ for section in breaking_news_sections:
 for link in href_links:
     # Navigate to the news post's URL
     driver.get(link)
-    
+    text = ""
     try:
         # Find the first occurrence of article text content
         article = driver.find_elements(By.CLASS_NAME, "just-article-content")
@@ -46,12 +46,15 @@ for link in href_links:
             try:
                 article_text = elem.find_elements(By.TAG_NAME, "p")
                 for p in article_text:
-
-                    post_data = {"link": link, "text": p.text, "site":"https://www.mediafax.ro/"}
-                    news_data.append(post_data)
+                    text = text + " " + p.text
 
             except NoSuchElementException:
                 print("No p element here")
+        if(text == ""):
+            continue
+
+        post_data = {"link": link, "text": text, "site":"https://www.mediafax.ro/"}
+        news_data.append(post_data)
     except NoSuchElementException:
         # If the element is not found, print an error message
         print("Article text content not found for this post.")

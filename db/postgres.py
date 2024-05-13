@@ -5,9 +5,9 @@ from typing import List, Dict
 
 
 class PostgreSQL:
-    def __init__(self, config_file: str):
+    def __init__(self):
         self.config = configparser.ConfigParser()
-        self.config.read(config_file)
+        self.config.read('config.ini')
         self.pool = psycopg2.pool.SimpleConnectionPool(
             1,
             10,
@@ -27,11 +27,11 @@ class PostgreSQL:
         self.pool.putconn(conn)
 
     def insert_data(self, data: Dict[str, str]):
-        query = f"INSERT INTO {self.table_name} (article, link, site) VALUES (%s, %s, $s)"
+        query = f"INSERT INTO {self.table_name} (article, link, site) VALUES (%s, %s, %s)"
         self.execute_query(query, (data['text'], data['link'], data['site']))
 
     def insert_multiple_data(self, data_list: List[Dict[str, str]]):
-        query = f"INSERT INTO {self.table_name} (article, link, site) VALUES (%s, %s, $s)"
+        query = f"INSERT INTO {self.table_name} (article, link, site) VALUES (%s, %s, %s)"
         values = [(data['text'], data['link'], data['site']) for data in data_list]
         conn = self.pool.getconn()
         cursor = conn.cursor()
