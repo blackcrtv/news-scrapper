@@ -47,7 +47,7 @@ for link in href_links:
                 article_text = elem.find_elements(By.TAG_NAME, "p")
                 for p in article_text:
 
-                    post_data = {"link": link, "text": p.text}
+                    post_data = {"link": link, "text": p.text, "site":"https://www.mediafax.ro/"}
                     news_data.append(post_data)
 
             except NoSuchElementException:
