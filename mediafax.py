@@ -22,7 +22,6 @@ breaking_news_sections = driver.find_elements(By.CLASS_NAME, "BreakingNews")
 href_links = []
 news_data = []
 
-# Iterate through each BreakingNews section
 for section in breaking_news_sections:
     # Find all news posts within the current BreakingNews section
     news_posts = section.find_elements(By.TAG_NAME, "a")
@@ -34,9 +33,6 @@ for section in breaking_news_sections:
         if link:
             href_links.append(link)
 
-
-print(href_links)
-print(">>>>>>>>>>>>")
 for link in href_links:
     # Navigate to the news post's URL
     driver.get(link)
@@ -59,9 +55,6 @@ for link in href_links:
     except NoSuchElementException:
         # If the element is not found, print an error message
         print("Article text content not found for this post.")
-    print(link)
-    print("Next:>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-
 
 # Close the WebDriver
 driver.close()
