@@ -7,7 +7,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from db.database import PostgreSQL
 import os
-import configparser
 
 db = PostgreSQL(os.path.join(os.path.dirname(__file__), 'db', 'config.ini'))
 
