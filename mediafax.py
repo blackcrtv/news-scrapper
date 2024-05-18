@@ -6,9 +6,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from db.postgres import PostgreSQL
+from db.elastic import ElasticSearch
 import os
 
-db = PostgreSQL()
+#db = PostgreSQL()
+db = ElasticSearch()
 
 # Start Firefox WebDriver
 driver = webdriver.Firefox()
