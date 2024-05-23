@@ -1,0 +1,20 @@
+.entity-I-PER {
+    color: blue;
+    font-weight: bold;
+  }
+  
+  .entity-I-ORG {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .entity-I-LOC {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .entity-I-MISC {
+    color: purple;
+    font-weight: bold;
+  }
+  
