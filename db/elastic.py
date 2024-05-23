@@ -23,12 +23,19 @@ class ElasticSearch:
         bulk_data = []
         for data in data_list:
             _id = data['link']
-            data['@timestamp'] = datetime.now().isoformat()
+            data['@timestamp'] = int(datetime.now().timestamp() * 1000)
             bulk_data.append({"index": {"_index": self.index_name, "_id": _id}})
-            bulk_data.append({
-                "link": data['link'],
-                "text": data['text'], 
-                "site": data['site'],
-                "@timestamp": data['@timestamp'],
-            })
-        self.es.bulk(body=bulk_data)
+            bulk_data.append({key: value for key, value in data.items()})
+        
+        return self.es.bulk(body=bulk_data)
+
+    def select_data(self,index: str = "index_news", query: Dict = None, size: int = 1) -> List[Dict[str, str]]:
+        if query is None:
+            query = {
+                "query": {
+                    "match_all": {}
+                }
+            }
+        response = self.es.search(index=index, body=query, size=size)
+        hits = response['hits']['hits']
+        return [hit['_source'] for hit in hits]

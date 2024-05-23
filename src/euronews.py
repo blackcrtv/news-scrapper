@@ -6,10 +6,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
-from db.postgres import PostgreSQL
-from db.elastic import ElasticSearch
 import os
 import time
+
+from db.postgres import PostgreSQL
+from db.elastic import ElasticSearch
+from TextTransformer import TextProcessor
+
+text_processor = TextProcessor()
+
 
 db = ElasticSearch()
 
@@ -102,9 +107,4 @@ for page in nav_links:
     except Exception as e:
             print(f"Eroare page {page}: {e}")
 driver.quit()
-
-# print(news_data)
-# Close the WebDriver
-# driver.close()
-
 
