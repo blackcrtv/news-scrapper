@@ -44,8 +44,6 @@ class EuronewsScraper:
                 if limit and len(nav_links) >= limit:
                     break
 
-
-
             for page in nav_links:
                 try:
                     self.driver.get(page)

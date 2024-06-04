@@ -1,16 +1,16 @@
 from transformers import pipeline
 
-#from spacy.lang.ro.examples import sentences 
-
-#FacebookAI/xlm-roberta-large-finetuned-conll03-english
 class TextProcessor:
     def __init__(self, summarization_model="Iulian277/ro-bart-1024", token_classification_model="51la5/roberta-large-NER"):
         self.summarizer = pipeline("summarization", model=summarization_model)
         self.classifier = pipeline("token-classification", model=token_classification_model)
 
-
     def preprocess_text(self, text):
-        replacements = {"ţ": "ț", "ş": "ș", "Ţ": "Ț", "Ş": "Ș"}
+        replacements = {
+            "ţ": "ț", "ş": "ș", "Ţ": "Ț", "Ş": "Ș",
+            "ă": "ă", "â": "â", "î": "î",
+            "Ă": "Ă", "Â": "Â", "Î": "Î"
+            }
         return text.translate(str.maketrans(replacements))
 
     def summarize(self, text):
